@@ -14,17 +14,13 @@ namespace Events
         }
         public void OnInkomendeBestelling(object source, StockbeheerEventArgs args)
         {
-            List<Bestelling> bestelling = new List<Bestelling>();
             if (!bestellingen.ContainsKey(args.Bestelling.Adres))
             {
-                bestelling.Add(args.Bestelling);
-                bestellingen.Add(args.Bestelling.Adres, bestelling);
+                bestellingen.Add(args.Bestelling.Adres, new List<Bestelling> { args.Bestelling });
             }
             else
             {
-                bestelling = bestellingen[args.Bestelling.Adres];
-                bestelling.Add(args.Bestelling);
-                bestellingen[args.Bestelling.Adres] = bestelling;
+                bestellingen[args.Bestelling.Adres].Add(args.Bestelling);
             }
         }
         public string ShowAlleBestellingen()

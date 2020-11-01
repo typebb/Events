@@ -13,17 +13,13 @@ namespace Events
         }
         public void OnWinkelverkoop(object source, WinkelEventArgs args)
         {
-            List<Bestelling> bestellingen = new List<Bestelling>();
             if (!rapport.ContainsKey(args.Bestelling.Adres))
             {
-                bestellingen.Add(args.Bestelling);
-                rapport.Add(args.Bestelling.Adres, bestellingen);
+                rapport.Add(args.Bestelling.Adres, new List<Bestelling> { args.Bestelling });
             }
             else
             {
-                bestellingen = rapport[args.Bestelling.Adres];
-                bestellingen.Add(args.Bestelling);
-                rapport[args.Bestelling.Adres] = bestellingen;
+                rapport[args.Bestelling.Adres].Add(args.Bestelling);
             }
         }
         public string ShowRapport()
