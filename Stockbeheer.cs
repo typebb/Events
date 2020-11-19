@@ -22,7 +22,7 @@ namespace Events
         }
         public void OnBestellingToegekomen(object source, StockbeheerEventArgs args)
         {
-            stock[args.Bestelling.Product].Aantal += args.Bestelling.Aantal;
+            StockAanvullen(args.Bestelling);
         }
         protected virtual void OnMinimumstock(Bestelling p)
         {
