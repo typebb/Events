@@ -17,7 +17,7 @@ namespace Events
             {
                 rapport.Add(args.Bestelling.Adres, new List<Bestelling> { args.Bestelling });
             }
-            else
+            else if (rapport.ContainsKey(args.Bestelling.Adres))
             {
                 rapport[args.Bestelling.Adres].Add(args.Bestelling);
             }
@@ -27,11 +27,17 @@ namespace Events
             StringBuilder s = new StringBuilder();
             foreach (KeyValuePair<string, List<Bestelling>> r in rapport)
             {
+                Dictionary<ProductType, Bestelling> productRapport = new Dictionary<ProductType, Bestelling>();
                 s.Append($"\n{r.Key} : \n");
                 foreach (Bestelling b in r.Value)
                 {
-                    s.Append(b.Product + "," + b.Aantal + "\n");
+                    if (!productRapport.ContainsKey(b.Product))
+                        productRapport.Add(b.Product, b);
+                    else
+                        productRapport[b.Product].Aantal += b.Aantal;
                 }
+                foreach (KeyValuePair<ProductType, Bestelling> b in productRapport)
+                    s.Append(b.Key + "," + b.Value.Aantal + "\n");
             }
             return "Sales - rapport \n" + s + "------------------";
         }
