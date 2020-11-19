@@ -27,13 +27,13 @@ namespace Events
             StringBuilder s = new StringBuilder();
             foreach (KeyValuePair<string, List<Bestelling>> r in rapport)
             {
-                s.Append(r.Key + "\n");
+                s.Append($"\n{r.Key} : \n");
                 foreach (Bestelling b in r.Value)
                 {
                     s.Append(b.Product + "," + b.Aantal + "\n");
                 }
             }
-            return "Sales - rapport \n" + s;
+            return "Sales - rapport \n" + s + "------------------";
         }
     }
 }

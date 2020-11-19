@@ -7,10 +7,15 @@ namespace Events
 {
     public class Groothandelaar
     {
+        public event EventHandler<StockbeheerEventArgs> BestellingVerzenden;
         private Dictionary<string, List<Bestelling>> bestellingen;
         public Groothandelaar()
         {
             bestellingen = new Dictionary<string, List<Bestelling>>();
+        }
+        protected virtual void OnBestellingVerzenden(Bestelling p)
+        {
+            BestellingVerzenden?.Invoke(this, new StockbeheerEventArgs { Bestelling = p });
         }
         public void OnInkomendeBestelling(object source, StockbeheerEventArgs args)
         {
@@ -22,6 +27,7 @@ namespace Events
             {
                 bestellingen[args.Bestelling.Adres].Add(args.Bestelling);
             }
+            OnBestellingVerzenden(bestellingen[args.Bestelling.Adres].Find(b => b.Product == args.Bestelling.Product));
         }
         public string ShowAlleBestellingen()
         {
@@ -34,7 +40,7 @@ namespace Events
                     s.Append(b.Product + "," + b.Aantal + "\n");
                 }
             }
-            return s.ToString();
+            return $"{s}------------------";
         }
         public KeyValuePair<string, List<Bestelling>> GetLaatsteBestelling()
         {

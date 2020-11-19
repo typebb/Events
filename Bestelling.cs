@@ -21,5 +21,9 @@ namespace Events
             Aantal = aantal;
             Adres = adres;
         }
+        public override string ToString()
+        {
+            return $"Product : {Product}, Prijs : {Prijs}, Aantal : {Aantal}, Adres : {Adres}";
+        }
     }
 }

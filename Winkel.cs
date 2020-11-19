@@ -8,7 +8,7 @@ namespace Events
 
         public void VerkoopProduct (Bestelling p)
         {
-            Console.WriteLine($"verkoopProduct - {p}");
+            Console.WriteLine(p.ToString() + "\n------------------");
             OnWinkelverkoop(p);
         }
         protected virtual void OnWinkelverkoop (Bestelling p)
